@@ -1,4 +1,4 @@
-docker create \
+sudo docker create \
   --name=radarr \
   -e PUID=1000 \
   -e PGID=100 \
@@ -6,6 +6,6 @@ docker create \
   -e UMASK_SET=022 `#optional` \
   -p 7878:7878 \
   -v /srv/dev-disk-by-label-Siala/Siala/docker/radarr:/config \
-  -v /srv/dev-disk-by-label-Siala/Siala/downloads:/downloads/movies \
+  -v /srv/dev-disk-by-label-Siala/Siala/downloads/movies:/downloads \
   --restart unless-stopped \
   linuxserver/radarr

@@ -1,9 +1,9 @@
-docker create \
+sudo docker create \
   --name=heimdall \
   -e PUID=1000 \
   -e PGID=100 \
   -e TZ=Europe/London \
-  -p 81:80 \
+  -p 80:80 \
   -p 443:443 \
   -v /srv/dev-disk-by-label-Siala/Siala/docker/heimdall/config:/config \
   --restart unless-stopped \

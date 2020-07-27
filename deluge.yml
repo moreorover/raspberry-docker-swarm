@@ -70,7 +70,7 @@ services:
     restart: unless-stopped
 
 
-docker create \
+sudo docker create \
   --name=deluge \
   --net=container:nordvpn \
   -e PUID=1000 \

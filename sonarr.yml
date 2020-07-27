@@ -6,6 +6,6 @@ docker create \
   -e UMASK_SET=022 `#optional` \
   -p 8989:8989 \
   -v /srv/dev-disk-by-label-Siala/Siala/docker/sonarr:/config \
-  -v /srv/dev-disk-by-label-Siala/Siala/downloads:/downloads/tv \
+  -v /srv/dev-disk-by-label-Siala/Siala/downloads/tv:/downloads \
   --restart unless-stopped \
   linuxserver/sonarr
