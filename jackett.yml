@@ -1,0 +1,11 @@
+sudo docker create \
+  --name=jackett \
+  --net=container:nordvpn \
+  -e PUID=1000 \
+  -e PGID=100 \
+  -e TZ=Europe/London \
+  -e AUTO_UPDATE=true `#optional` \
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/jackett:/config \
+  -v /srv/dev-disk-by-label-Siala/Siala/downloads:/downloads \
+  --restart unless-stopped \
+  linuxserver/jackett:arm32v7-latest

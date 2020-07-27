@@ -1,0 +1,35 @@
+# Wireguard
+sudo docker create \
+          -ti \
+          --cap-add=NET_ADMIN \
+          --cap-add=SYS_MODULE \
+          --device /dev/net/tun \
+          --name nordvpn \
+          -p 8112:8112 \
+          -p 9117:9117 \
+          -p 6789:6789 \
+          -e NETWORK=192.168.1.0/24 \
+          -e USER=mselvenis@gmail.com \
+          -e PASS='kc158741' \
+          -e CONNECT=United_Kingdom \
+          -e TECHNOLOGY=NordLynx \
+          --restart unless-stopped \
+          bubuntux/nordvpn:armv7hf-latest
+
+# OpenVPN
+docker create \
+          -ti \
+          --cap-add=NET_ADMIN \
+          --device /dev/net/tun \
+          --name nordvpn_openvpn \
+          -p 8112:8112 \
+          -p 9117:9117 \
+          -p 6789:6789 \
+          -e NETWORK=192.168.1.0/24 \
+          -e USER=mselvenis@gmail.com \
+          -e PASS='kc158741' \
+          -e CONNECT=United_Kingdom \
+          -e TECHNOLOGY=OpenVPN \
+          -e TZ=Europe/London \
+          --restart unless-stopped \
+          bubuntux/nordvpn:armv7hf-latest

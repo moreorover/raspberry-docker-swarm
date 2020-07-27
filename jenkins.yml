@@ -1,0 +1,7 @@
+docker create \
+  --name=jenkins \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/jenkins/jenkins_home:/var/jenkins_home \
+  --restart unless-stopped \
+  comdata456/jenkins-raspberry:2.245-alpine-arm64

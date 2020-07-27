@@ -1,0 +1,16 @@
+docker create \
+  --name=plex \
+  --net=host \
+  -e PUID=1000 \
+  -e PGID=100 \
+  -e VERSION=docker \
+  -e UMASK_SET=022 `#optional` \
+  -e PLEX_CLAIM=claim-ssa3YFtHHaQ38yw9pu5p \
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/plex/config:/config \
+  --restart unless-stopped \
+  linuxserver/plex:arm32v7-latest
+
+
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/plex/config:/config \
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/plex/config:/tv \
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/plex/config:/movies \

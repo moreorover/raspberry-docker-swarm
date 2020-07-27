@@ -1,0 +1,10 @@
+sudo docker create \
+  --name=nzbget \
+  --net=container:nordvpn \
+  -e PUID=1000 \
+  -e PGID=100 \
+  -e TZ=Europe/London \
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/nzbget/config:/config \
+  -v /srv/dev-disk-by-label-Siala/Siala/downloads:/downloads \
+  --restart unless-stopped \
+  linuxserver/nzbget:arm32v7-latest

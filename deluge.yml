@@ -1,0 +1,84 @@
+version: "3"
+services:
+  deluge:
+    image: linuxserver/deluge:arm32v7-latest
+    container_name: deluge
+    network_mode: host
+    ports:
+      - "8112:8112/tcp"
+      - "8112:8112/udp"
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - /sharedfolders/Config/Sonarr/config/:/config
+      - /srv/dev-disk-by-label-Siala/Siala:/downloads
+    restart: unless-stopped
+    networks:
+      macvlan_100_27:
+        ipv4_address: 192.168.1.99
+networks:
+  macvlan_100_27:
+    external:
+      name: macvlan_100_27
+
+
+version: '3'
+services:
+    transmission-openvpn:
+        volumes:
+            - '/sharedfolders/Config/Transmission/:/data'
+            - '/etc/localtime:/etc/localtime:ro'
+        environment:
+            - CREATE_TUN_DEVICE=true
+            - OPENVPN_PROVIDER=NORDVPN
+            - OPENVPN_CONFIG=UK London
+            - OPENVPN_USERNAME=mselvenis@gmail.com
+            - OPENVPN_PASSWORD=kc158741
+            - WEBPROXY_ENABLED=false
+            - LOCAL_NETWORK=192.168.0.0/16
+        cap_add:
+            - NET_ADMIN
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+        ports:
+            - '9091:9091'
+        image: jstrader/transmission-openvpn:arm32v7
+
+
+
+version: "3"
+services:
+  deluge:
+    image: linuxserver/deluge:arm32v7-latest
+    container_name: deluge
+    network_mode: container:vpn
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - /sharedfolders/Config/Sonarr/config/:/config
+      - /srv/dev-disk-by-label-Siala/Siala:/downloads
+    restart: unless-stopped
+
+
+docker create \
+  --name=deluge \
+  --net=container:nordvpn \
+  -e PUID=1000 \
+  -e PGID=100 \
+  -e TZ=Europe/London \
+  -e UMASK_SET=022 `#optional` \
+  -e DELUGE_LOGLEVEL=error `#optional` \
+  -v /srv/dev-disk-by-label-Siala/Siala/docker/deluge:/config \
+  -v /srv/dev-disk-by-label-Siala/Siala/downloads:/downloads \
+  --restart unless-stopped \
+  linuxserver/deluge:arm32v7-latest
